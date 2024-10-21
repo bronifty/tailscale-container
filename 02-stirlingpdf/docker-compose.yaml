@@ -21,7 +21,7 @@ services:
     restart: unless-stopped
   stirlingpdf:
     image: frooodle/s-pdf:latest
-    container_name: stirlingpdf
+    container_name: stirlingpdf-container
     network_mode: service:tailscale
     depends_on:
       - tailscale

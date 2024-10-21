@@ -1,8 +1,8 @@
 services:
   tailscale:
     image: tailscale/tailscale:latest
-    container_name: tailscale
-    hostname: nginx-basic
+    container_name: tailscale-container
+    hostname: nginx
     env_file:
       - .env
     environment:
@@ -16,9 +16,12 @@ services:
       - net_admin
       - sys_module
     restart: unless-stopped
-  nginx-basic:
+  nginx:
     image: nginx
+    container_name: nginx-container
     network_mode: service:tailscale
+    depends_on:
+      - tailscale
 volumes:
   tailscale-volume:
     driver: local
