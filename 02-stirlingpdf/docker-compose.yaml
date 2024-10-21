@@ -1,7 +1,7 @@
 services:
-  stirling-ts:
+  tailscale:
     image: tailscale/tailscale:latest
-    container_name: stirling-ts
+    container_name: tailscale-container
     hostname: pdf
     env_file:
       - .env
@@ -13,7 +13,7 @@ services:
       - TS_USERSPACE=false
     volumes:
       - ${PWD}/config:/config
-      - stirling-ts:/var/lib/tailscale
+      - tailscale-volume:/var/lib/tailscale
       - /dev/net/tun:/dev/net/tun
     cap_add:
       - net_admin
@@ -22,9 +22,9 @@ services:
   stirlingpdf:
     image: frooodle/s-pdf:latest
     container_name: stirlingpdf
-    network_mode: service:stirling-ts
+    network_mode: service:tailscale
     depends_on:
-      - stirling-ts
+      - tailscale
     volumes:
       - stirling-config:/configs
       - stirling-storage:/usr/share/tesseract-ocr/5/tessdata
@@ -33,7 +33,7 @@ services:
     restart: unless-stopped
 
 volumes:
-  stirling-ts:
+  tailscale-volume:
     driver: local
   stirling-config:
     driver: local
