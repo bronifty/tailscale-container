@@ -18,6 +18,7 @@ We are starting from the following repo, but it has some errors, so making updat
 
 - run an arbitrary command inside of the nginx container's namespace with nsenter
 - we can run this for each container to see what's going on inside of them
+
 ```bash
 nsenter -t $(docker inspect -f '{{.State.Pid}}' nginx-container) -n netstat -tunalp
 ```
@@ -30,8 +31,14 @@ docker network ls
 docker network inspect 01-nginx-basic_default | jq '.[0].Containers'
 ```
 
-- remove volumes
+- dockerstop()
+- can go in your .bashrc or .zshrc
+
 ```bash
 
-docker volume rm $(docker volume ls -q)
+dockerstop() {
+    docker stop $(docker ps -aq)
+    docker rm $(docker ps -aq)
+    docker volume rm $(docker volume ls -q)
+}
 ```
