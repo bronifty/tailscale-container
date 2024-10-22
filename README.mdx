@@ -42,3 +42,10 @@ dockerstop() {
     docker volume rm $(docker volume ls -q)
 }
 ```
+
+- exec into a running container
+
+```bash
+docker exec -it tailscale-container /bin/sh
+/ # tailscale serve status
+```
