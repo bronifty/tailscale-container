@@ -29,3 +29,9 @@ nsenter -t $(docker inspect -f '{{.State.Pid}}' nginx-container) -n netstat -tun
 docker network ls
 docker network inspect 01-nginx-basic_default | jq '.[0].Containers'
 ```
+
+- remove volumes
+```bash
+
+docker volume rm $(docker volume ls -q)
+```
