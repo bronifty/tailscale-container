@@ -16,8 +16,16 @@ We are starting from the following repo, but it has some errors, so making updat
 
 ## Deep Dive Notes
 
-- run an arbitrary command inside of the nginx container's namespace with nsenter 
+- run an arbitrary command inside of the nginx container's namespace with nsenter
+- we can run this for each container to see what's going on inside of them
 ```bash
 nsenter -t $(docker inspect -f '{{.State.Pid}}' nginx-container) -n netstat -tunalp
 ```
 
+- alternatively, we can use docker's network tools to inspect
+- docker creates a separate network for each "stack" (set of services in a docker compose file)
+
+```bash
+docker network ls
+docker network inspect 01-nginx-basic_default | jq '.[0].Containers'
+```
