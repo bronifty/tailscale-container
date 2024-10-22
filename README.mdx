@@ -16,7 +16,7 @@ We are starting from the following repo, but it has some errors, so making updat
 
 ## Deep Dive Notes
 
-- get the pid of the nginx container and pass it to nsenter to see the network connections inside of the container's namespace in the linux kernel
+- run an arbitrary command inside of the nginx container's namespace with nsenter 
 ```bash
 nsenter -t $(docker inspect -f '{{.State.Pid}}' nginx-container) -n netstat -tunalp
 ```
